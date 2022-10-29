@@ -1,0 +1,10 @@
+- title: "Суперпроект"
+  link: "ссыка на пост 1"
+  small_logo: ""
+  description: "Описание суперпроекта"
+  tags: test test1
+
+- title: "Название проекта"
+  link: "ссыка на пост 1"
+  small_logo: "ссылка на маленькое лого"
+  description: "Описание проекта"
