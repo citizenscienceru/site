@@ -8,7 +8,7 @@
                             <%= page.title %>
                         </h5>
                         <% if (page.path==='projects/index.html' ) { %>
-                            <h6>На этой странице представлены все проекты для гражданских учёных, которые нам известны.
+                            <!-- <h6>На этой странице представлены все проекты для гражданских учёных, которые нам известны. -->
                                 <h6>
                                     <div>
 
@@ -87,8 +87,66 @@
                                             </div>
                                         </div>
                                         <script>
+                                                // Запрос API
+                                                function filterSelection(c, checked) {
+                                                    // console.log('---')
+                                                    let req = {}; // формирование запроса
+                                                    req.participation = [];
+                                                    req.location = [];
+                                                    req.trend = [];
+
+                                                    for (i = 0; i < checked.length; i++) { // перебор всех записей
+                                                        if (checked[i].match(/checkbox/ig)) {
+                                                            let tmp = '';
+                                                            if (checked[i].match(/home/ig)) {
+                                                                tmp = 'home'
+                                                            } else if (checked[i].match(/nature/ig)) {
+                                                                tmp = 'nature'
+                                                            }
+                                                            req.location.push(tmp)
+                                                        } else if (checked[i].match(/Participation/ig)) {
+                                                            //    console.log(checked[i], 'yayaya')
+                                                            // req.participation.push(checked[i])
+                                                            let tmp = '';
+                                                            if (checked[i].match(/active/ig)) {
+                                                                tmp = 'active'
+                                                            } else if (checked[i].match(/passive/ig)) {
+                                                                tmp = 'passive'
+                                                            }
+                                                            req.participation.push(tmp)
+                                                        } else {
+                                                            req.trend.push(checked[i])
+                                                        }
+                                                    }
+                                                    // отправлять
+                                                    var xhr = new XMLHttpRequest();
+                                                    console.log(req)
+                                                    // xhr.open("POST", "http://localhost:3001/api", true); //"https://citizenscience.ru/api"
+                                                    xhr.open("POST", "https://citizenscience.ru/api", true); //""
+                                                    xhr.setRequestHeader("Content-Type", "application/json");
+                                                    xhr.onreadystatechange = function () {
+                                                        if (xhr.readyState === 4 && xhr.status === 200) {
+                                                            var json = JSON.parse(xhr.responseText);
+                                                            // console.log(json);
+                                                            applyFilter(json)
+                                                        }
+                                                    };
+                                                    var data = JSON.stringify(req);
+                                                    xhr.send(data);
+                                                }
+                                            // обработка нажатия кнопки поиска
+                                            function searchBTN() {
+                                                let checked = []; // Хранилище отмеченных чекбоксов
+                                                var checkedBoxes = document.querySelectorAll('input:checked');
+                                                if (checkedBoxes.length > 0) {
+                                                    checkedBoxes.forEach((check) => {
+                                                        checked.push(check.id);
+                                                    })
+                                                    filterSelection(undefined, checked);
+                                                }
+                                            }
                                             //---- v2
-                                            const fn = () => {
+                                            const fnAtStart = () => {
                                                 // var getUrlParameter = function getUrlParameter(sParam) { // получение параметров поиска
                                                 //     var sPageURL = window.location.search.substring(1),
                                                 //         sURLVariables = sPageURL.split('&'),
@@ -104,10 +162,6 @@
                                                 //     }
                                                 //     return false;
                                                 // };
-                                                
-                                            
-
-                                            
 
                                                 // // Если есть поиск - фильтровать 
                                                 // var search = getUrlParameter('search'); // здесь поисковый запрос
@@ -115,7 +169,7 @@
                                                 //     const searchArray = search.split(' ');
                                                 //     filterSelection(undefined, searchArray);
                                                 // } else {
-                                                //     filterSelection("all")
+                                                    // filterSelection("all")
                                                 // }
                                             }
 
@@ -125,61 +179,67 @@
                                                 Засунуть html в div с проектами
                                                 */
                                                // 
-                                               const elem = document.getElementById('projects');
-                                               elem.innerHTML = '';
+
 
                                                 data = JSON.parse(data.data);
-                                                for (index = data.length - 1; index >= 0; --index) {
-                                                    // console.log(data[index])
-                                                    // const project = generateProject(data[index]);
-                                                    let html = elem.innerHTML;
-                                                    html += generateProject(data[index]);
-                                                    elem.innerHTML = html;
-                                                }
+                                                if (data.length > 0) {
+                                                    const elem = document.getElementById('projects');
+                                                    elem.innerHTML = '';
+                                                    for (index = data.length - 1; index >= 0; --index) {
+                                                        // console.log(data[index])
+                                                        // const project = generateProject(data[index]);
 
+                                                        let html = elem.innerHTML;
+                                                        html += generateProject(data[index]);
+                                                        elem.innerHTML = html;
+                                                        // console.log(html)
+                                                    }
+                                                }
                                             }
 
                                             function generateProject(post) {
                                                 // console.log(post);
+                                                // const post = JSON.parse(postString);
+                                                
                                                 let project = `
                                                 <div class="col-md-6 col-lg-4 mb-4 filterDiv show">
                                                     <div class="card card-bg p-3 h-100">
                                                         <div class="card-body">
-                                                            <a href="{$post.permalink}" style="text-decoration: none;">
+                                                            <a href="${post.permalink}" style="text-decoration: none;">
                                                                 <h6 class="text-gradient fs--1 fw-bold">
-                                                                    ${post.name}
+                                                                    ${post.title}
                                                                 </h6>
                                                                 <hr class="text-100" />
                                                                 <div class="d-flex align-items-center">`
-                                                                if (post.small_image) {
-                                                                    project += `<img class="me-3 me-md-3" src="/img/projects/${post.name}/${post.small_image}" alt="${post.name}" style="padding-bottom:10px;"/>`;
+                                                                if (post.small_logo) {
+                                                                    project += `<img class="me-3 me-md-3" src="/img/projects/${post.img_path}/${post.small_logo}" alt="${post.name}" style="padding-bottom:10px;"/>`;
                                                                 }
                                                                 project += `<div class="my-3 fs--1">
                                                                         
                                                                         <!-- <p class="fw-normal mb-0">дата<span></span></p> -->
                                                                     </div>
                                                                 </div>
-                                                                <h5 class="fw-bold lh-base fs-0 text-700">${post.desc_short}</h5>
+                                                                <h5 class="fw-bold lh-base fs-0 text-700">${post.description_short}</h5>
                                                                 <div class="d-flex align-items-center mt-4 fs--1">`
-                                                                    if (post.participation.includes('active')) {
+                                                                    if (post.participation.includes('активное')) {
                                                                         project += 'активное'
                                                                     }
                                                                     if (post.participation.length === 2) {
                                                                         project += ' и '
                                                                     }
-                                                                    if (post.participation.includes('passive')) {
+                                                                    if (post.participation.includes('пассивное')) {
                                                                         project += 'пассивное'
                                                                     }
 
                                                                     project += `  участие<br>Где делать:`;
                                                                     
-                                                                    if (post.location.includes('home')) {
+                                                                    if (post.location.includes('дома')) {
                                                                         project += ` дома`
                                                                     }
                                                                     if (post.location.length === 2) {
                                                                         project += ' и'
                                                                     }
-                                                                    if (post.location.includes('street')) {
+                                                                    if (post.location.includes('улице')) {
                                                                         project += ` на улице`
                                                                     }
 
@@ -234,18 +294,7 @@
                                                 return project;
                                             }
 
-                                            // обработка нажатия кнопки поиска
-                                            function searchBTN() {
-                                                let checked = []; // Хранилище отмеченных чекбоксов
-                                                var checkedBoxes = document.querySelectorAll('input:checked');
-                                                if (checkedBoxes.length > 0) {
-                                                    checkedBoxes.forEach((check) => {
-                                                        checked.push(check.id);
-                                                        // console.log('==', check.id)
-                                                    })
-                                                    filterSelection(undefined, checked);
-                                                }
-                                            }
+
 
                                             function docReady(fn) {  // проверка готовности документа
                                                 // see if DOM is already available
@@ -257,53 +306,9 @@
                                                 }
                                             }
 
-                                            docReady(fn); // проверка готовности документа
+                                            docReady(fnAtStart); // проверка готовности документа
 
-                                                // Запрос API
-                                                function filterSelection(c, checked) {
-                                                    let req = {}; // формирование запроса
-                                                    req.participation = [];
-                                                    req.location = [];
-                                                    req.trend = [];
-
-                                                    for (i = 0; i < checked.length; i++) { // перебор всех записей
-                                                        if (checked[i].match(/checkbox/ig)) {
-                                                            let tmp = '';
-                                                            if (checked[i].match(/home/ig)) {
-                                                                tmp = 'home'
-                                                            } else if (checked[i].match(/nature/ig)) {
-                                                                tmp = 'nature'
-                                                            }
-                                                            req.location.push(tmp)
-                                                        } else if (checked[i].match(/Participation/ig)) {
-                                                            //    console.log(checked[i], 'yayaya')
-                                                            // req.participation.push(checked[i])
-                                                            let tmp = '';
-                                                            if (checked[i].match(/active/ig)) {
-                                                                tmp = 'active'
-                                                            } else if (checked[i].match(/passive/ig)) {
-                                                                tmp = 'passive'
-                                                            }
-                                                            req.participation.push(tmp)
-                                                        } else {
-                                                            req.trend.push(checked[i])
-                                                        }
-                                                    }
-                                                    // отправлять
-                                                    var xhr = new XMLHttpRequest();
-                                                    
-                                                    xhr.open("POST", "http://localhost:3001/api", true); //"https://citizenscience.ru/api"
-                                                    xhr.setRequestHeader("Content-Type", "application/json");
-                                                    xhr.onreadystatechange = function () {
-                                                        if (xhr.readyState === 4 && xhr.status === 200) {
-                                                            var json = JSON.parse(xhr.responseText);
-                                                            // console.log(json);
-                                                            applyFilter(json)
-                                                        }
-                                                    };
-                                                    var data = JSON.stringify(req);
-                                                    xhr.send(data);
-                                                }
+                                                
                                         </script>
                                         <% } %>
                                             <%- page.content %>
