@@ -29,12 +29,15 @@
       </div>
     </div>
 
-    <div class="row flex-center h-100 circle-blend circle-blend-left circle-cyan">
+    <div
+      class="row flex-center h-100 circle-blend circle-blend-left circle-cyan"
+      style="min-height: 350px"
+    >
       <div class="col-12">
         <div class="row align-items-center circle-blend circle-blend-right circle-warning">
           <% let count = 1 %> <% site.data.news.forEach( (news) => { %> <% if (count < 4) { %>
           <div class="col-md-6 col-lg-4 mb-4 undefined">
-            <div class="card card-bg p-3 h-100">
+            <div class="card card-bg p-3 h-100" style="min-height: 350px">
               <div class="card-body">
                 <h6 class="text-gradient fs--1 fw-bold"><%= news.type %></h6>
                 <hr class="text-100" />
@@ -49,13 +52,11 @@
                   <% } %>
                   <div class="my-3 fs--1">
                     <%= news.description %>
-                    <br />
-                    <br />
-                    <p class="mb-0 fw-bold"><%= news.author %></p>
-                    <br />
-                    <p class="fw-normal mb-0">
-                      <% const date = new Date(news.pub_date); %> <%= date.getDate() %>.<%=
-                      date.getMonth()+1 %>.<%= date.getFullYear() %> <% if (news.source_url) { %>
+
+                    <p class="fw-normal mb-0" style="position: absolute; bottom: 20px">
+                      <%= news.author %>&nbsp; <% const date = new Date(news.pub_date); %> <%=
+                      date.getDate() %>.<%= date.getMonth()+1 %>.<%= date.getFullYear() %> <% if
+                      (news.source_url) { %>
                       <a href="<%= news.source_url %>" target="_blank">Источник</a>
                       <% } %>
                       <!-- .<span>5 mins read</span>
