@@ -1,4 +1,11 @@
 - type: Новость
+  pub_date: 2025-02-15 21:30:29
+  title: Новый участник команды!
+  source_url: ""
+  author: Робот
+  description: Приветствуем нового участника команды citizenscience.ru в поиске
+    больших чисел Мерсена, John_Davidson!
+- type: Новость
   pub_date: 2025-02-14 21:30:03
   title: Простые числа Мерсене - положение команды
   source_url: ""
