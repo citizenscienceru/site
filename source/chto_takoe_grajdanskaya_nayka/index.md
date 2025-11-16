@@ -56,4 +56,6 @@ date: 2021-05-15 17:50:24
 
 <iframe src="https://vkvideo.ru/video_ext.php?oid=-242173&id=456239897&autoplay=1" width="853" height="480" style="background-color: #000" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
 
+<iframe src="https://vkvideo.ru/video_ext.php?oid=-219100239&id=456239077" width="853" height="480" style="background-color: #000" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+
 <iframe src="https://vkvideo.ru/video_ext.php?oid=-204900770&id=456239376&autoplay=1" width="853" height="480" style="background-color: #000" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
