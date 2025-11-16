@@ -31,7 +31,8 @@
             })
 
               site.posts.data.slice().reverse().forEach( post => {
-              if (count < 4) {
+                if (post.project_active !== false) {
+                  if (count < 4) {
           %>
             <div class="col-md-4 mb-4 filter-item">
               <div class="card card-bg px-4 px-md-2 px-lg-3 px-xxl-4 pt-4">
@@ -43,20 +44,19 @@
                       role="button";
                     >
                   <% if (post.small_logo) { %>
-                  <img
-                    class="me-3 me-md-3"
-                    src="/img/projects/<%= post.logo_path %>/<%= post.small_logo %>"
-                    alt="<%= post.title %>"
-                    style="display: block; margin: 0 auto; max-width: 100%; border-radius: 25px; overflow: hidden;"
-                  />
-                  <!-- <div
-                    style="
-                      background-image: url(/img/projects/<%= post.logo_path %>/<%= post.small_logo %>);
-                      background-color: #000;
+                    <img
+                      class="me-3 me-md-3"
+                      src="/img/projects/<%= post.logo_path %>/<%= post.small_logo %>"
+                      alt="<%= post.title %>"
+                      style="display: block; margin: 0 auto; max-width: 100%; border-radius: 25px; overflow: hidden;"
+                    />
+                    <!-- <div
+                      style="
+                        background-image: url(/img/projects/<%= post.logo_path %>/<%= post.small_logo %>);
+                        background-color: #000;
 
-                    "
-                  ></div> -->
-
+                      "
+                    ></div> -->
                   <% } %>
                   <div class="card-body text-center text-md-start">
                     <h6 class="fw-bold fs-1"><%= post.name %></h6>
@@ -86,8 +86,7 @@
               </a>
               </div>
             </div>
-          <% } 
-          count++ %> <% }) 
+          <% count++ }}}) 
           %>
         </div>
       </div>
