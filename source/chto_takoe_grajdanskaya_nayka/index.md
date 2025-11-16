@@ -51,3 +51,9 @@ date: 2021-05-15 17:50:24
 10. Лидеры проектов гражданской науки учитывают правовые и этические аспекты, касающиеся авторского права, интеллектуальной собственности, соглашения об обмене информацией, конфиденциальности, ответственности, влияния на окружающую среду.
 
 [источник](https://zenodo.org/records/5127534/files/ECSA_Ten_principles_of_CS_Russian.pdf)
+
+# Видео о гражданской науке
+
+<iframe src="https://vkvideo.ru/video_ext.php?oid=-242173&id=456239897&autoplay=1" width="853" height="480" style="background-color: #000" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
+
+<iframe src="https://vkvideo.ru/video_ext.php?oid=-204900770&id=456239376&autoplay=1" width="853" height="480" style="background-color: #000" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;" frameborder="0" allowfullscreen></iframe>
