@@ -10,6 +10,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Set timezone
+        run: sudo timedatectl set-timezone Europe/Moscow
+
       - name: Install Dependencies
         run: npm ci
 
