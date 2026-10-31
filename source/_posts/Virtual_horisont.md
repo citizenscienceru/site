@@ -10,6 +10,8 @@
  small_logo: small_logo.png
  logo_path: virtual_horisont
  url: https://vk.com/vr.view
+ project_active: false
+ sitemap: false
 ---
 
 Проект российских студентов по наблюдению за облаками. Участвовать в нём очень просто: достаточно [присоедениться к боту](https://t.me/CloudCollectionBot) и отправлять ему фотографии.
